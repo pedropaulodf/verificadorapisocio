@@ -1,0 +1,77 @@
+.switch-container{
+position: relative;
+  .switch {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 80px;
+    height: 25px;
+    text-align: center;
+    margin: 0px 0 0 0px;
+    background: #55b2f0;
+    transition: all 0.2s ease;
+    border-radius: 25px;
+  }
+  .switch span {
+    position: absolute;
+    width: 20px;
+    height: 4px;
+    top: 50%;
+    left: 50%;
+    margin: -2px 0px 0px -4px;
+    background: #fff;
+    display: block;
+    transform: rotate(-45deg);
+    transition: all 0.2s ease;
+  }
+  .switch span:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 4px;
+    height: 12px;
+    margin-top: -8px;
+    background: #fff;
+    transition: all 0.2s ease;
+  }
+  input[type=radio] {
+    display: naone;
+  }
+  .switch label {
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.2);
+    width: 45px;
+    line-height: 25px;
+    transition: all 0.2s ease;
+    font-weight: bold;
+    font-size: 0.9em;
+  }
+  label[for=sim] {
+    position: absolute;
+    left: 0px;
+    height: 0px;
+  }
+  label[for=nao] {
+    position: absolute;
+    right: 0px;
+  }
+  #nao:checked ~ .switch {
+    background: #ebc682;
+  }
+  #nao:checked ~ .switch span {
+    background: #fff;
+    margin-left: -8px;
+  }
+  #nao:checked ~ .switch span:after {
+    background: #fff;
+    height: 20px;
+    margin-top: -8px;
+    margin-left: 8px;
+  }
+  #sim:checked ~ .switch label[for=sim] {
+    color: #fff;
+  }
+  #nao:checked ~ .switch label[for=nao] {
+    color: #fff;
+  }
+}

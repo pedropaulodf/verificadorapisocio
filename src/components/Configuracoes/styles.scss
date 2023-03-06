@@ -1,0 +1,81 @@
+.configuracoes-container {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  padding: 14px 12px;
+
+  border-bottom: 1px solid #c5c5c5;
+
+  .sub-container {
+    width: var(--page-container-width);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    .input-container{
+
+      display: flex;
+      width: 100%;
+
+      .box-label {
+
+        background-color: #dfdfdf;
+        padding: 6px 10px;
+        border-radius: 8px 0px 0px 8px;
+
+        label{
+          color: #333333;
+          font-weight: bold;
+          font-size: 0.8em;
+        }
+      }
+
+      .box-input {
+        background-color: #ececec;
+        padding: 6px 10px;
+        border-radius: 0px 8px 8px 0px;
+        width: 100%;
+        display: flex;
+        gap: 10px;
+
+
+        .input-idEmpresa{
+          width: 30px !important;
+        }
+
+        input {
+          background-color: transparent !important;
+          border: none;
+          height: 100%;
+          width: 100%;
+          outline: none;
+          color: #111111;
+          font-size: 1em;
+        }
+
+        input[type="radio"] {
+          background-color: transparent !important;
+          border: none;
+          height: 100%;
+          width: 20px;
+          outline: none;
+          color: #111111;
+          font-size: 1em;
+        }
+
+      }
+    }
+    
+    .input-container-idEmpresa{
+      width: 136px;
+    }
+    .input-container-sistemaQuality{
+      width: 450px;
+      min-width: 250px;
+    }
+  }
+}

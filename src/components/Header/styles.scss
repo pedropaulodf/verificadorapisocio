@@ -1,0 +1,51 @@
+.header-container {
+  background-color: #599658;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 16px 12px;
+
+  .sub-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: var(--page-container-width);
+
+    .logo {
+
+      background-color: #00000030;
+      border-radius: 3px;
+      padding: 8px 16px;
+
+      p {
+        color: #ffffff;
+        font-weight: bold;
+      }
+    }
+    
+    .icons-container {
+
+      display: flex;
+      gap: 6px;
+
+      button {
+        border-radius: 5px;
+        padding: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .button-drive {
+        background-color: #D0E9FF;
+      }
+
+      .button-copy {                              background-color: #FFE9D0;
+      }
+    }
+  }
+
+}
