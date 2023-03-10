@@ -1,7 +1,11 @@
+import { useDadosApiContext } from "../../contexts/useDadosApiContext";
 import SwitchSimNao from "../SwitchSimNao";
 import "./styles.scss";
 
 function Configuracoes() {
+  const { urlPorta, setUrlPorta, idEmpresa, setIdEmpresa } =
+    useDadosApiContext();
+
   return (
     <div className="configuracoes-container">
       <div className="sub-container">
@@ -15,6 +19,8 @@ function Configuracoes() {
               name="urlPorta"
               id="urlPorta"
               placeholder="Digite a url com a porta:"
+              value={urlPorta}
+              onChange={(evt) => setUrlPorta(evt.target.value)}
             />
           </div>
         </div>
@@ -31,6 +37,8 @@ function Configuracoes() {
               className="input-idEmpresa"
               min={0}
               max={999}
+              value={idEmpresa}
+              onChange={(evt) => setIdEmpresa(evt.target.value)}
             />
           </div>
         </div>

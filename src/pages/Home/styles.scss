@@ -1,0 +1,25 @@
+.home-page-container{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0 12px 12px 12px;
+  
+  .home-page-sub-container{
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 12px;
+  
+    width: var(--page-container-width);
+
+    .divider {
+      height: calc(100vh - 200px);
+      width: 1px;
+      position: relative;
+      background-color: #c5c5c5;
+    }
+  }
+}

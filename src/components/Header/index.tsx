@@ -11,9 +11,14 @@ function Header() {
           <p>VERIFICAR API • APP DO SÓCIO</p>
         </div>
         <div className="icons-container">
-          <button type="button" className="button-drive">
-            <FaGoogleDrive color="#0b6cbb" size={20} />
-          </button>
+          <a
+            href="https://drive.google.com/drive/folders/1BCGZgXB10ecvARXUlo7m0L9L5PDk_qrg?usp=sharing"
+            target="_blank"
+          >
+            <button type="button" className="button-drive">
+              <FaGoogleDrive color="#0b6cbb" size={20} />
+            </button>
+          </a>
           <button type="button" className="button-copy">
             <FiCopy color="#bb751a" size={20} />
           </button>

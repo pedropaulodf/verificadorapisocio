@@ -1,6 +1,11 @@
+import { DadosApiContextProvider } from "./contexts/useDadosApiContext";
 import Home from "./pages/Home";
 function App() {
-  return <Home />;
+  return (
+    <DadosApiContextProvider>
+      <Home />
+    </DadosApiContextProvider>
+  );
 }
 
 export default App;

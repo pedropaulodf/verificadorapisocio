@@ -1,0 +1,60 @@
+.box-login-container{
+
+  margin: 12px 0 0 0;
+  background: #F7F7F7;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  width: 100%;
+
+  .box-login-header{
+
+    background-color: #EBEBEB;
+    text-align: center;
+    padding: 8px;
+
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .box-login-content{
+    margin: 12px;
+
+    button {
+      background-color: #3E7CC6;
+      color: #ffffff;
+
+      padding: 12px;
+      border-radius: 8px;
+      width: 100%;
+      box-shadow: 0px 0px 6px 1px #00000030;
+    }
+
+    .card-empresa-dados{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      border-radius: 6px;
+      padding: 4px;
+      border: 2px solid #C5C5C5;
+
+      margin: 12px 0;
+
+      div {
+        padding: 3px 10px;
+        border-radius: 4px;
+        margin-right: 10px;
+        background-color: #E2E2E2;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        p {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
