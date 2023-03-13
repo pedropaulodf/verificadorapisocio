@@ -104,6 +104,9 @@ function BoxLogin() {
 
   return (
     <div className="box-login-container">
+      <div className="box-login-header-title">
+        <p>LOGIN</p>
+      </div>
       <div className="box-login-header">
         <p>
           <span>{urlPorta}</span>

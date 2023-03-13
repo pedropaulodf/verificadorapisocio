@@ -1,3 +1,4 @@
+import { ToastContainer } from "react-toastify";
 import BoxClubeInfo from "../../components/BoxClubeInfo";
 import BoxLogin from "../../components/BoxLogin";
 import Configuracoes from "../../components/Configuracoes";
@@ -16,6 +17,7 @@ const Home = () => {
           <BoxLogin />
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -1,10 +1,14 @@
+import { QueryClient, QueryClientProvider } from "react-query";
 import { DadosApiContextProvider } from "./contexts/useDadosApiContext";
 import Home from "./pages/Home";
 function App() {
+  const queryClient = new QueryClient();
   return (
-    <DadosApiContextProvider>
-      <Home />
-    </DadosApiContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <DadosApiContextProvider>
+        <Home />
+      </DadosApiContextProvider>
+    </QueryClientProvider>
   );
 }
 

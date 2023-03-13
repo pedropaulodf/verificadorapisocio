@@ -7,15 +7,20 @@
 
   padding: 16px 12px;
 
-  .sub-container{
+  .sub-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     width: var(--page-container-width);
 
-    .logo {
+    .logo-select-box {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+    }
 
+    .logo {
       background-color: #00000030;
       border-radius: 3px;
       padding: 8px 16px;
@@ -25,9 +30,8 @@
         font-weight: bold;
       }
     }
-    
-    .icons-container {
 
+    .icons-container {
       display: flex;
       gap: 6px;
 
@@ -40,12 +44,12 @@
       }
 
       .button-drive {
-        background-color: #D0E9FF;
+        background-color: #d0e9ff;
       }
 
-      .button-copy {                              background-color: #FFE9D0;
+      .button-copy {
+        background-color: #ffe9d0;
       }
     }
   }
-
 }

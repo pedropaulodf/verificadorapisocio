@@ -21,6 +21,7 @@
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  font-size: 16px;
 }
 
 button {
@@ -35,3 +36,14 @@ button:hover {
 a {
   text-decoration: none;
 }
+
+.dangerouslySetInnerHTML{
+  background-color: #ffffff;
+  margin: 8px 0;
+}
+.dangerouslySetInnerHTML .content-container{
+  background-color: #00000000;
+}
+.dangerouslySetInnerHTML h1 {font-size: 16px !important;}
+.dangerouslySetInnerHTML h2 {font-size: 15px !important;}
+.dangerouslySetInnerHTML h3 {font-size: 14px !important;}
