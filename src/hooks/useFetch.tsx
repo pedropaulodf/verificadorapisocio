@@ -66,6 +66,10 @@ function useFetch<T>(
           method,
           headers: {
             "Content-Type": options.contentType || "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+            "Access-Control-Allow-Headers":
+              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
           },
         } as AxiosRequestConfig;
 
@@ -116,7 +120,6 @@ function useFetch<T>(
             : error?.message,
         };
       } else {
-        console.log("error:3333", error);
         throw {
           status: error?.code,
           data: error?.message,
@@ -173,7 +176,6 @@ function useFetch<T>(
 
   useEffect(() => {
     if (_query.error) {
-      console.log("_query.error:", _query.error);
       setError({
         message: {
           data: _query.error.data,
