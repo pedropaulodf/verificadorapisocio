@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FiCopy } from "react-icons/fi";
+import { FiCopy, FiGithub } from "react-icons/fi";
 import { FaGoogleDrive } from "react-icons/fa";
 import Select from "react-select";
 
@@ -132,6 +132,14 @@ function Header() {
           />
         </div>
         <div className="icons-container">
+          <a
+            href="https://github.com/pedropaulodf/verificadorapisocio"
+            target="_blank"
+          >
+            <button type="button" className="button-github">
+              <FiGithub color="#535353" size={20} />
+            </button>
+          </a>
           <a
             href="https://drive.google.com/drive/folders/1BCGZgXB10ecvARXUlo7m0L9L5PDk_qrg?usp=sharing"
             target="_blank"

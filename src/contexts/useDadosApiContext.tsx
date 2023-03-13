@@ -35,6 +35,12 @@ type PropsDadosApiContext = {
   setBoxClubeInfoErrorData: Dispatch<SetStateAction<BoxClubeInfoErrorDataType>>;
 };
 
+type ImagensASerVerificadas =
+  | "logoApp"
+  | "logoCabecalho"
+  | "logoFundoMenuLateral"
+  | "logoFundoLogin";
+
 const DadosApiContext = createContext<PropsDadosApiContext>(
   {} as PropsDadosApiContext
 );
@@ -126,24 +132,26 @@ export const DadosApiContextProvider: React.FC<{
         "logoCabecalho",
         "logoFundoMenuLateral",
         "logoFundoLogin",
-      ];
+      ] as ImagensASerVerificadas[];
 
-      function checarImagemExiste(file: string) {
+      function checarImagemExiste(file?: string) {
         try {
-          const imageTest = { status: false };
-          var imagemRequest = new XMLHttpRequest();
-          imagemRequest.open("HEAD", file, false);
-          imagemRequest.send();
-          var resultado = imagemRequest.status;
-          if (resultado !== 200) imageTest.status = false;
-          return resultado;
+          if (file) {
+            const imageTest = { status: false };
+            var imagemRequest = new XMLHttpRequest();
+            imagemRequest.open("HEAD", file, false);
+            imagemRequest.send();
+            var resultado = imagemRequest.status;
+            if (resultado !== 200) imageTest.status = false;
+            return resultado;
+          }
         } catch (error) {
           return 999;
         }
       }
 
-      const arrayIsImagensExistes = imagensAppArray.map((i) =>
-        checarImagemExiste(data[i])
+      const arrayIsImagensExistes = imagensAppArray.map((value) =>
+        checarImagemExiste(data[value])
       );
 
       if (arrayIsImagensExistes.every((i) => i === 200)) {

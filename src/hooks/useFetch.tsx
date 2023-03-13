@@ -152,7 +152,7 @@ function useFetch<T>(
     setCall(true);
   };
 
-  let _query = useQuery(
+  let _query = useQuery<T, any>(
     [
       key,
       currentPage,
@@ -174,21 +174,12 @@ function useFetch<T>(
   useEffect(() => {
     if (_query.error) {
       console.log("_query.error:", _query.error);
-      if (typeof _query.error === "object") {
-        setError({
-          message: {
-            data: _query.error.data,
-            status: _query.error.status,
-          },
-        });
-      } else {
-        setError({
-          message: {
-            data: _query.error.data,
-            status: _query.error.status,
-          },
-        });
-      }
+      setError({
+        message: {
+          data: _query.error.data,
+          status: _query.error.status,
+        },
+      });
     }
   }, [_query.error]);
 
