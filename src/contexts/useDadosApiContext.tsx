@@ -226,14 +226,14 @@ export const DadosApiContextProvider: React.FC<{
           title: "API OK • NÃO FOI POSSÍVEL CHECAR AS IMAGENS",
           type: "lightwarning",
           message:
-            "[CORS | 405] - A comunicação com o servidor está ok, porém, não foi possível checar se as imagens existem ou não. Se elas estão sendo mostradas abaixo, aparentemente está tudo certo. Se não estiver, corrigir.",
+            "[CORS | 405] - A comunicação com o servidor está ok, porém, não foi possível checar se as imagens existem ou não. Se elas estão sendo mostradas abaixo ou acessíveis no link externo, está tudo certo. Se não estiver, corrigir.",
         });
       } else {
         setBoxClubeInfoErrorData({
           title: "API COM IMAGEM(S) QUEBRADA(S)",
           type: "warning",
           message:
-            "A comunicação com o servidor está ok, mas as imagens para o aplicativo não estão todas carregando corretamente. NÃO É POSSÍVEL SUBIR O APLICATIVO COM ESSE ERRO.",
+            "A comunicação com o servidor está ok, mas as imagens para o aplicativo não estão todas carregando corretamente. Verifique cada uma no link externo. NÃO É POSSÍVEL SUBIR O APLICATIVO COM ESSE ERRO.",
         });
       }
     }
