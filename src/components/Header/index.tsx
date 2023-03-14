@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FiCopy, FiGithub, FiHelpCircle } from "react-icons/fi";
 import { FaGoogleDrive } from "react-icons/fa";
+import { MdMonitorHeart } from "react-icons/md";
 import Select from "react-select";
 
 import useFetch from "../../hooks/useFetch";
@@ -157,6 +158,15 @@ function Header() {
           >
             <FiHelpCircle color="#347b24" size={20} />
           </button> */}
+          <a
+            href="https://qltmonitor.pedropaulo.dev/"
+            target="_blank"
+            title="Monitor de Servidores Online"
+          >
+            <button type="button" className="button-monitor">
+              <MdMonitorHeart color="#d3d3d3" size={20} />
+            </button>
+          </a>
           <a
             href="https://github.com/pedropaulodf/verificadorapisocio"
             target="_blank"
