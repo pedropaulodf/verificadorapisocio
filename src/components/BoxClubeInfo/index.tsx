@@ -77,11 +77,7 @@ function BoxClubeInfo() {
                     }
                   </p>
                 </div>
-                <iframe
-                  src={boxClubeInfoData.retornoApi.logoFundoLogin}
-                  width="100"
-                  height="100"
-                ></iframe>
+
                 <div style={{ display: "inline-block" }}>
                   {boxClubeInfoData.retornoApi.logoFundoLogin && (
                     <CardImagemApp
