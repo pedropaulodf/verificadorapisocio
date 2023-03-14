@@ -1,14 +1,12 @@
-import { ClubeType } from "./ClubeType";
-
-export type BoxClubeInfoDataType = {
+export type BoxDataType<T> = {
   url: string;
   buscar: boolean;
-  retornoApi?: ClubeType;
+  retornoApi?: T;
 };
 
-export type BoxClubeInfoErrorDataType = {
+export type BoxErrorDataType = {
   title?: string;
   message?: string;
   status?: string;
-  type: "error" | "success" | "warning";
+  type: "error" | "success" | "warning" | "lightwarning";
 };

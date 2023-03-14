@@ -7,12 +7,13 @@ import React, {
   useState,
 } from "react";
 import useFetch from "../hooks/useFetch";
-import {
-  BoxClubeInfoDataType,
-  BoxClubeInfoErrorDataType,
-} from "../types/BoxClubeInfoType";
+import { BoxDataType, BoxErrorDataType } from "../types/BoxClubeInfoType";
+import { BoxLoginInputsData } from "../types/BoxLoginType";
 import { ClubeType } from "../types/ClubeType";
-import { DefaultApiResponseType } from "../types/RetornoAPIType";
+import {
+  DefaultApiResponseType,
+  LoginResultType,
+} from "../types/RetornoAPIType";
 import { toastError } from "../utils/reactToastify";
 import { RemoverBarraFinalString } from "../utils/utils";
 
@@ -28,11 +29,17 @@ type PropsDadosApiContext = {
   token: string;
   setToken: Dispatch<SetStateAction<string>>;
   handleBuscarClubeInfo: () => void;
+  handleBuscarLogin: () => void;
   handleLimparTodosDados: () => void;
   isLoadingClubeInfo: boolean;
-  boxClubeInfoData: BoxClubeInfoDataType;
-  boxClubeInfoErrorData: BoxClubeInfoErrorDataType;
-  setBoxClubeInfoErrorData: Dispatch<SetStateAction<BoxClubeInfoErrorDataType>>;
+  boxClubeInfoData: BoxDataType<ClubeType>;
+  boxClubeInfoErrorData: BoxErrorDataType;
+  setBoxClubeInfoErrorData: Dispatch<SetStateAction<BoxErrorDataType>>;
+  boxLoginErrorData: BoxErrorDataType;
+  boxLoginData: BoxDataType<string>;
+  boxLoginInputsData: BoxLoginInputsData;
+  setBoxLoginInputsData: Dispatch<SetStateAction<BoxLoginInputsData>>;
+  isLoadingLogin: boolean;
 };
 
 type ImagensASerVerificadas =
@@ -55,15 +62,16 @@ export const DadosApiContextProvider: React.FC<{
   const [token, setToken] = useState("");
 
   // getClubeInfo
-  const [boxClubeInfoData, setBoxClubeInfoData] =
-    useState<BoxClubeInfoDataType>({
-      url: "",
-      buscar: false,
-      retornoApi: undefined,
-    });
+  const [boxClubeInfoData, setBoxClubeInfoData] = useState<
+    BoxDataType<ClubeType>
+  >({
+    url: "",
+    buscar: false,
+    retornoApi: undefined,
+  });
 
   const [boxClubeInfoErrorData, setBoxClubeInfoErrorData] =
-    useState<BoxClubeInfoErrorDataType>({
+    useState<BoxErrorDataType>({
       title: undefined,
       message: undefined,
       type: "error",
@@ -82,8 +90,40 @@ export const DadosApiContextProvider: React.FC<{
     });
   };
 
+  // boxLogin
+  const [boxLoginInputsData, setBoxLoginInputsData] =
+    useState<BoxLoginInputsData>({
+      cpf: "",
+      senha: "",
+    });
+  const [boxLoginData, setBoxLoginData] = useState<BoxDataType<string>>({
+    url: "",
+    buscar: false,
+    retornoApi: undefined,
+  });
+
+  const [boxLoginErrorData, setBoxLoginErrorData] = useState<BoxErrorDataType>({
+    title: undefined,
+    message: undefined,
+    type: "error",
+  });
+
+  const handleLimparBoxLogin = () => {
+    setBoxClubeInfoData({
+      url: "",
+      buscar: false,
+      retornoApi: undefined,
+    });
+    setBoxLoginErrorData({
+      title: undefined,
+      message: undefined,
+      type: "error",
+    });
+  };
+
   const handleLimparTodosDados = () => {
     handleLimparBoxClubeInfo();
+    handleLimparBoxLogin();
   };
 
   const {
@@ -105,6 +145,24 @@ export const DadosApiContextProvider: React.FC<{
     1
   );
 
+  const {
+    isLoading: isLoadingLogin,
+    data: dataLogin,
+    fetchNext: fetchNextLogin,
+    error: errorLogin,
+  } = useFetch<LoginResultType>(
+    `${RemoverBarraFinalString(boxLoginData.url)}/appApi/login`,
+    {
+      method: "POST",
+      body: {
+        idEmpresa,
+        sistemaQuality,
+      },
+    },
+    1
+  );
+
+  // getClubeInfo
   const handleBuscarClubeInfo = () => {
     setBoxClubeInfoData((prev) => ({
       ...prev,
@@ -137,12 +195,16 @@ export const DadosApiContextProvider: React.FC<{
       function checarImagemExiste(file?: string) {
         try {
           if (file) {
-            const imageTest = { status: false };
-            var imagemRequest = new XMLHttpRequest();
+            // const imageTest = { status: false };
+            const imagemRequest = new XMLHttpRequest();
             imagemRequest.open("HEAD", file, false);
             imagemRequest.send();
-            var resultado = imagemRequest.status;
-            if (resultado !== 200) imageTest.status = false;
+            const resultado = imagemRequest.status;
+            // if (resultado === 200 || resultado === 405) {
+            //   imageTest.status = true;
+            // } else {
+            //   imageTest.status = false;
+            // }
             return resultado;
           }
         } catch (error) {
@@ -159,19 +221,19 @@ export const DadosApiContextProvider: React.FC<{
           title: "API OK",
           type: "success",
         });
-      } else if (arrayIsImagensExistes.some((i) => i === 999)) {
+      } else if (arrayIsImagensExistes.some((i) => i === 999 || i === 405)) {
         setBoxClubeInfoErrorData({
-          title: "API OK • NÃO FOI POSSÍVEL CHECAR AS IMAGENS (CORS)",
-          type: "warning",
+          title: "API OK • NÃO FOI POSSÍVEL CHECAR AS IMAGENS",
+          type: "lightwarning",
           message:
-            "A comunicação com o servidor está ok, mas não foi possível checar se as imagens existem ou não. Se elas estão sendo mostradas abaixo, aparentemente está tudo certo.",
+            "[CORS | 405] - A comunicação com o servidor está ok, porém, não foi possível checar se as imagens existem ou não. Se elas estão sendo mostradas abaixo, aparentemente está tudo certo. Se não estiver, corrigir.",
         });
       } else {
         setBoxClubeInfoErrorData({
-          title: "API COM IMAGENS QUEBRADAS",
+          title: "API COM IMAGEM(S) QUEBRADA(S)",
           type: "warning",
           message:
-            "A comunicação com o servidor está ok, mas as imagens para o aplicativo não estão todas carregando corretamente. Não é possível subir o aplicativo com esse erro.",
+            "A comunicação com o servidor está ok, mas as imagens para o aplicativo não estão todas carregando corretamente. NÃO É POSSÍVEL SUBIR O APLICATIVO COM ESSE ERRO.",
         });
       }
     }
@@ -179,7 +241,6 @@ export const DadosApiContextProvider: React.FC<{
 
   useEffect(() => {
     if (errorClubeInfo) {
-      console.log("errorClubeInfo:", errorClubeInfo);
       toastError("Erro ao buscar dados do Clube!");
       setBoxClubeInfoErrorData({
         title: "API ERRO",
@@ -189,6 +250,62 @@ export const DadosApiContextProvider: React.FC<{
       });
     }
   }, [errorClubeInfo]);
+
+  // Login
+
+  const handleBuscarLogin = () => {
+    setBoxLoginData((prev) => ({
+      ...prev,
+      url: RemoverBarraFinalString(urlPorta),
+      buscar: true,
+      retornoApi: undefined,
+    }));
+    fetchNextLogin(1, {
+      cache: false,
+      cpfCnpj: boxLoginInputsData.cpf.replace(/\D/g, ""),
+      senha: boxLoginInputsData.senha,
+    });
+    setToken("");
+  };
+
+  useEffect(() => {
+    if (dataLogin && dataLogin.status === "ok") {
+      setToken(dataLogin.data.token);
+
+      const customRetornoApi = dataLogin.data.usuarios.reduce(
+        (acc, curr) =>
+          acc +
+          `<b>Nome:</b> ${curr.pessoa?.nomeRazaoSocial}<br><b>Relacionamento:</b> ${curr.tipoRelacionamento}<br><b>Categoria:</b> ${curr.tituloSocio?.categoriaTitulo?.descricao} (${curr.tituloSocio?.titulo?.numero})<br><br>`,
+        ""
+      );
+
+      setBoxLoginData({
+        url: urlPorta,
+        buscar: false,
+      });
+
+      setBoxLoginErrorData({
+        title: "API OK",
+        type: "success",
+        message: `<html>${customRetornoApi.substring(
+          0,
+          customRetornoApi.length - 1
+        )}</html>`,
+      });
+    }
+  }, [dataLogin]);
+
+  useEffect(() => {
+    if (errorLogin) {
+      toastError("Erro ao testar Login!");
+      setBoxLoginErrorData({
+        title: "API ERRO",
+        message: `${errorLogin.message?.data}`,
+        status: `${errorLogin.message?.status}`,
+        type: "error",
+      });
+    }
+  }, [errorLogin]);
 
   return (
     <DadosApiContext.Provider
@@ -209,6 +326,12 @@ export const DadosApiContextProvider: React.FC<{
         handleLimparTodosDados,
         boxClubeInfoErrorData,
         setBoxClubeInfoErrorData,
+        boxLoginErrorData,
+        boxLoginData,
+        boxLoginInputsData,
+        setBoxLoginInputsData,
+        isLoadingLogin,
+        handleBuscarLogin,
       }}
     >
       {children}

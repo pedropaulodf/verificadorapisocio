@@ -1,8 +1,8 @@
-import { BoxClubeInfoErrorDataType } from "../../types/BoxClubeInfoType";
+import { BoxErrorDataType } from "../../types/BoxClubeInfoType";
 import "./styles.scss";
 
 type MensagemRetornoAPIPropsType = {
-  data: BoxClubeInfoErrorDataType;
+  data: BoxErrorDataType;
 };
 
 const MensagemRetornoAPI = ({ data }: MensagemRetornoAPIPropsType) => {
@@ -13,7 +13,9 @@ const MensagemRetornoAPI = ({ data }: MensagemRetornoAPIPropsType) => {
           ? "success-message"
           : data.type === "error"
           ? "error-message"
-          : "warning-message"
+          : data.type === "warning"
+          ? "warning-message"
+          : "lightwarning-message"
       }
     >
       <div className="box-title">
@@ -22,19 +24,21 @@ const MensagemRetornoAPI = ({ data }: MensagemRetornoAPIPropsType) => {
           {data.status ? ` • ${data.status}` : ""}
         </p>
       </div>
-      {data.type !== "success" && (
+      {data.message && (
         <div className="box-content">
-          <p>
-            <span>Motivo: </span>
-            {data.message?.includes("html") ? (
-              <div
-                dangerouslySetInnerHTML={{ __html: data.message ?? "" }}
-                className="dangerouslySetInnerHTML"
-              />
-            ) : (
-              data.message
-            )}
-          </p>
+          {/* <span>Motivo: </span> */}
+          {data.message?.includes("html") ? (
+            <div
+              dangerouslySetInnerHTML={{ __html: data.message ?? "" }}
+              className="dangerouslySetInnerHTML"
+              style={{
+                backgroundColor:
+                  data.status === "404" ? "#ffffff" : "#00000000",
+              }}
+            />
+          ) : (
+            <p>{data.message}</p>
+          )}
         </div>
       )}
     </div>

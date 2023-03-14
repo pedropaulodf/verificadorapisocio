@@ -6,6 +6,7 @@ import CardImagemApp from "../CardImagemApp";
 import MensagemRetornoAPI from "../MensagemRetornoAPI";
 
 import "./styles.scss";
+import Loading from "../Loading";
 
 function BoxClubeInfo() {
   const {
@@ -56,79 +57,80 @@ function BoxClubeInfo() {
           Buscar Clube Info
         </button>
 
-        {boxClubeInfoErrorData.title && (
-          <MensagemRetornoAPI data={boxClubeInfoErrorData} />
-        )}
-
         {isLoadingClubeInfo ? (
-          <div>
-            <p>Buscando...</p>
-          </div>
+          <Loading />
         ) : (
-          boxClubeInfoData?.retornoApi && (
-            <>
-              <div className="card-empresa-dados">
-                <div>
-                  <p>{boxClubeInfoData.retornoApi.codCli}</p>
+          <>
+            {boxClubeInfoErrorData.title && (
+              <MensagemRetornoAPI data={boxClubeInfoErrorData} />
+            )}
+            {boxClubeInfoData?.retornoApi && (
+              <>
+                <div className="card-empresa-dados">
+                  <div>
+                    <p>{boxClubeInfoData.retornoApi.codCli}</p>
+                  </div>
+                  <p>
+                    {
+                      boxClubeInfoData.retornoApi?.empresa?.pessoa
+                        ?.nomeRazaoSocial
+                    }
+                  </p>
                 </div>
-                <p>
-                  {
-                    boxClubeInfoData.retornoApi?.empresa?.pessoa
-                      ?.nomeRazaoSocial
-                  }
-                </p>
-              </div>
 
-              <div style={{ display: "inline-block" }}>
-                {boxClubeInfoData.retornoApi.logoFundoLogin && (
-                  <CardImagemApp
-                    nameImage="fundo_app"
-                    urlImage={boxClubeInfoData.retornoApi.logoFundoLogin}
-                  />
-                )}
-                {boxClubeInfoData.retornoApi.logoFundoMenuLateral && (
-                  <CardImagemApp
-                    nameImage="fundo_menu"
-                    urlImage={boxClubeInfoData.retornoApi.logoFundoMenuLateral}
-                  />
-                )}
-                {boxClubeInfoData.retornoApi.logoApp && (
-                  <CardImagemApp
-                    nameImage="logo_app"
-                    urlImage={boxClubeInfoData.retornoApi.logoApp}
-                  />
-                )}
-                {boxClubeInfoData.retornoApi.logoCabecalho && (
-                  <CardImagemApp
-                    nameImage="logo_cab"
-                    urlImage={boxClubeInfoData.retornoApi.logoCabecalho}
-                  />
-                )}
-              </div>
+                <div style={{ display: "inline-block" }}>
+                  {boxClubeInfoData.retornoApi.logoFundoLogin && (
+                    <CardImagemApp
+                      nameImage="fundo_app"
+                      urlImage={boxClubeInfoData.retornoApi.logoFundoLogin}
+                    />
+                  )}
+                  {boxClubeInfoData.retornoApi.logoFundoMenuLateral && (
+                    <CardImagemApp
+                      nameImage="fundo_menu"
+                      urlImage={
+                        boxClubeInfoData.retornoApi.logoFundoMenuLateral
+                      }
+                    />
+                  )}
+                  {boxClubeInfoData.retornoApi.logoApp && (
+                    <CardImagemApp
+                      nameImage="logo_app"
+                      urlImage={boxClubeInfoData.retornoApi.logoApp}
+                    />
+                  )}
+                  {boxClubeInfoData.retornoApi.logoCabecalho && (
+                    <CardImagemApp
+                      nameImage="logo_cab"
+                      urlImage={boxClubeInfoData.retornoApi.logoCabecalho}
+                    />
+                  )}
+                </div>
 
-              <div className="card-retorno-api">
-                <div className="card-retorno-api-header">
-                  <p>Retorno API</p>
+                <div className="card-retorno-api">
+                  <div className="card-retorno-api-header">
+                    <p>Retorno API</p>
+                  </div>
+                  <div className="card-retorno-api-content">
+                    <JSONPretty
+                      id="json-pretty"
+                      data={boxClubeInfoData.retornoApi}
+                      theme={{
+                        main: "line-height:1.2;color:#3393a7;background:#ffffff00;overflow:auto;font-family:monospace;",
+                        error:
+                          "line-height:1.2;color:#3393a7;background:#ffeeee;overflow:auto;font-family:monospace;",
+                        key: "color:#3393a7;font-family:monospace;",
+                        string: "color:#ce7612;font-family:monospace;",
+                        value: "color:#b82ee2;font-family:monospace;",
+                        boolean: "color:#239418;font-family:monospace;",
+                      }}
+                      style={{ fontSize: ".9em", fontFamily: "serif" }}
+                    ></JSONPretty>
+                  </div>
                 </div>
-                <div className="card-retorno-api-content">
-                  <JSONPretty
-                    id="json-pretty"
-                    data={boxClubeInfoData.retornoApi}
-                    theme={{
-                      main: "line-height:1.2;color:#3393a7;background:#ffffff00;overflow:auto;font-family:monospace;",
-                      error:
-                        "line-height:1.2;color:#3393a7;background:#ffeeee;overflow:auto;font-family:monospace;",
-                      key: "color:#3393a7;font-family:monospace;",
-                      string: "color:#ce7612;font-family:monospace;",
-                      value: "color:#b82ee2;font-family:monospace;",
-                      boolean: "color:#239418;font-family:monospace;",
-                    }}
-                    style={{ fontSize: ".9em", fontFamily: "serif" }}
-                  ></JSONPretty>
-                </div>
-              </div>
-            </>
-          )
+              </>
+            )}
+          </>
         )}
       </div>
     </div>

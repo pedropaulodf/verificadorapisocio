@@ -74,7 +74,20 @@ function useFetch<T>(
 
         switch (method?.toUpperCase()) {
           case "PUT":
-          case "POST":
+          case "POST": {
+            const idEmpresaLocal = options?.body
+              ?.idEmpresa as unknown as string;
+
+            payload = {
+              ...payload,
+              data: {
+                idEmpresa: parseInt(idEmpresaLocal ?? "1"),
+                sistemaQuality: options.body.sistemaQuality,
+                ...stateBody,
+              },
+            };
+            break;
+          }
           case "DELETE":
           case "GET": {
             payload = {
@@ -88,10 +101,10 @@ function useFetch<T>(
             break;
           }
         }
-        console.log("################## AXIOS - PAYLOAD ##################");
-        // console.log("urlPorta:", urlPorta);
-        console.log("payload:", payload);
-        console.log("#####################################################");
+        // console.log("################## AXIOS - PAYLOAD ##################");
+        // // console.log("urlPorta:", urlPorta);
+        // console.log("payload:", payload);
+        // console.log("#####################################################");
         const req = await axios(payload);
         setIsLoading(false);
         return req.data;
@@ -99,20 +112,18 @@ function useFetch<T>(
     } catch (error: any) {
       setIsLoading(false);
       if (axios.isAxiosError(error)) {
-        console.log(" ================ AXIOS TRY - ERROR ================");
-        console.log("error: ", error);
-        console.log("error?.response?.data: ", error?.response?.data);
-        console.log("error?.response?.status: ", error?.response?.status);
-        console.log(" ===================================================");
+        // console.log(" ================ AXIOS TRY - ERROR ================");
+        // console.log("error: ", error);
+        // console.log("error?.response?.data: ", error?.response?.data);
+        // console.log("error?.response?.status: ", error?.response?.status);
+        // console.log(" ===================================================");
         // throw error?.response?.data ?? "Erro Geral Axios";
         throw {
           status: error?.response ? error?.response?.status : error?.code,
-          data: error?.response
-            ? error?.response?.status === 404
-              ? error?.response?.data
-              : error?.response?.data
-              ? error?.response?.data?.message
-              : error?.response?.data
+          data: error?.response?.data?.message
+            ? error?.response?.data?.message
+            : error?.response?.data
+            ? error?.response?.data
             : error?.message,
         };
       } else {

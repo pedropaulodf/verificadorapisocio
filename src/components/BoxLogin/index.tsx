@@ -1,106 +1,22 @@
+import { useState } from "react";
+import { FiEyeOff, FiEye } from "react-icons/fi";
 import { useDadosApiContext } from "../../contexts/useDadosApiContext";
+import { cpfMask, RemoverBarraFinalString } from "../../utils/utils";
+import Loading from "../Loading";
+import MensagemRetornoAPI from "../MensagemRetornoAPI";
 import "./styles.scss";
 
 function BoxLogin() {
-  const { urlPorta, idEmpresa, sistemaQuality } = useDadosApiContext();
+  const {
+    urlPorta,
+    boxLoginErrorData,
+    boxLoginInputsData,
+    setBoxLoginInputsData,
+    isLoadingLogin,
+    handleBuscarLogin,
+  } = useDadosApiContext();
 
-  const RETORNO_API = {
-    status: "ok",
-    data: {
-      token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJyb2xlIjoiYXBwIiwicHJpbWFyeXNpZCI6WyIxMDIwMDAiLCIwIl0sIm5iZiI6MTY3ODExMjY5MiwiZXhwIjoxNzA5NTYyMjkyLCJpYXQiOjE2NzgxMTI2OTJ9.jZRge_jTvpdrfKqBYxEycZYVDDgmwG0HgZxweLM09nQ",
-      expires: "2024-03-04T14:24:52.5283874Z",
-      usuarios: [
-        {
-          pessoa: {
-            nomeRazaoSocial: "Gilberto De Oliveira Borges",
-            cpfCnpj: "27500865821",
-            foto: "http://ddnsipetenisclube.ddns.net:8880/temp/00001_00000225.jpg",
-            nomeAbreviado: "Gilberto Borges",
-            contato: null,
-            sexo: null,
-            rg: null,
-            dataNascimento: "0001-01-01T00:00:00",
-          },
-          idEmpresa: 0,
-          saldoPrePago: 0.0,
-          idEmpresaRelacionamento: 102000,
-          tipoRelacionamento: "ST",
-          tituloSocio: {
-            dependente: false,
-            idTituloSocio: 102000,
-            titulo: {
-              idTitulo: 0,
-              numero: 225,
-            },
-            categoriaTitulo: {
-              idCategoria: 1,
-              descricao: "Proprietario",
-            },
-          },
-          convidado: null,
-        },
-        {
-          pessoa: {
-            nomeRazaoSocial: "Milena Ap. Vernaschi Borges",
-            cpfCnpj: "27500865821",
-            foto: "http://ddnsipetenisclube.ddns.net:8880/masculino.png",
-            nomeAbreviado: "Milena Borges",
-            contato: null,
-            sexo: null,
-            rg: null,
-            dataNascimento: "0001-01-01T00:00:00",
-          },
-          idEmpresa: 0,
-          saldoPrePago: 0.0,
-          idEmpresaRelacionamento: 102001,
-          tipoRelacionamento: "SD",
-          tituloSocio: {
-            dependente: true,
-            idTituloSocio: 102001,
-            titulo: {
-              idTitulo: 0,
-              numero: 225,
-            },
-            categoriaTitulo: {
-              idCategoria: 1,
-              descricao: "Proprietario",
-            },
-          },
-          convidado: null,
-        },
-        {
-          pessoa: {
-            nomeRazaoSocial: "Vanda Maria S. Vernaschi",
-            cpfCnpj: "27500865821",
-            foto: "http://ddnsipetenisclube.ddns.net:8880/masculino.png",
-            nomeAbreviado: "Vanda Vernaschi",
-            contato: null,
-            sexo: null,
-            rg: null,
-            dataNascimento: "0001-01-01T00:00:00",
-          },
-          idEmpresa: 0,
-          saldoPrePago: 0.0,
-          idEmpresaRelacionamento: 102002,
-          tipoRelacionamento: "SD",
-          tituloSocio: {
-            dependente: true,
-            idTituloSocio: 102002,
-            titulo: {
-              idTitulo: 0,
-              numero: 225,
-            },
-            categoriaTitulo: {
-              idCategoria: 1,
-              descricao: "Proprietario",
-            },
-          },
-          convidado: null,
-        },
-      ],
-    },
-  };
+  const [inputType, setInputType] = useState<"text" | "password">("password");
 
   return (
     <div className="box-login-container">
@@ -109,12 +25,70 @@ function BoxLogin() {
       </div>
       <div className="box-login-header">
         <p>
-          <span>{urlPorta}</span>
+          <span>{RemoverBarraFinalString(urlPorta)}</span>
           {`/appApi/login`}
         </p>
       </div>
       <div className="box-login-content">
-        <button type="button">Testar login</button>
+        <div className="input-box">
+          <div className="label-box">
+            <p>CPF:</p>
+          </div>
+          <input
+            type="text"
+            value={boxLoginInputsData.cpf}
+            onChange={(evt) =>
+              setBoxLoginInputsData((prev) => ({
+                ...prev,
+                cpf: cpfMask(evt.target.value),
+              }))
+            }
+          />
+        </div>
+
+        <div className="input-box">
+          <div className="label-box">
+            <p>SENHA:</p>
+          </div>
+          <input
+            type={inputType}
+            value={boxLoginInputsData.senha}
+            onChange={(evt) =>
+              setBoxLoginInputsData((prev) => ({
+                ...prev,
+                senha: evt.target.value,
+              }))
+            }
+          />
+          <div
+            className="btn-show-pass"
+            onClick={() =>
+              setInputType((prev) => (prev === "text" ? "password" : "text"))
+            }
+          >
+            {inputType === "text" ? (
+              <FiEyeOff color="#333333" size={18} />
+            ) : (
+              <FiEye color="#333333" size={18} />
+            )}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => handleBuscarLogin()}
+          disabled={isLoadingLogin}
+        >
+          Testar login
+        </button>
+
+        {isLoadingLogin ? (
+          <Loading />
+        ) : (
+          boxLoginErrorData.title && (
+            <MensagemRetornoAPI data={boxLoginErrorData} />
+          )
+        )}
       </div>
     </div>
   );

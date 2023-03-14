@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FiCopy, FiGithub } from "react-icons/fi";
+import { FiCopy, FiGithub, FiHelpCircle } from "react-icons/fi";
 import { FaGoogleDrive } from "react-icons/fa";
 import Select from "react-select";
 
@@ -21,6 +21,10 @@ function Header() {
     setSistemaQuality,
     setUrlPorta,
     handleLimparTodosDados,
+    idEmpresa,
+    sistemaQuality,
+    urlPorta,
+    boxLoginInputsData,
   } = useDadosApiContext();
 
   const [selectOptions, setSelectOptions] = useState<
@@ -48,6 +52,7 @@ function Header() {
   useEffect(() => {
     if (dataBuscarQualityJson) {
       const optionLocal = dataBuscarQualityJson.appParticular
+        .filter((f) => parseInt(f.codCli) < 9000)
         .sort((a, b) => a.codCli.localeCompare(b.codCli))
         .map((i) => ({
           label: `${i.codCli} • ${i.appName}`.toString(),
@@ -72,7 +77,19 @@ function Header() {
   };
 
   const handleCopyUrlLink = () => {
-    copyText("Header");
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    // const pathname = window.location.pathname;
+
+    const text = `${protocol}//${hostname}${
+      port ? `:${port}` : ""
+    }/?idEmpresa=${idEmpresa}&sistemaQuality=${sistemaQuality}&urlPorta=${urlPorta}&cpf=${boxLoginInputsData.cpf.replace(
+      /\D/g,
+      ""
+    )}`;
+
+    copyText(text);
   };
 
   return (
@@ -132,9 +149,18 @@ function Header() {
           />
         </div>
         <div className="icons-container">
+          {/* <button
+            type="button"
+            className="button-help"
+            onClick={() => alert("Ajuda - Guia de erros")}
+            title="Ajuda"
+          >
+            <FiHelpCircle color="#347b24" size={20} />
+          </button> */}
           <a
             href="https://github.com/pedropaulodf/verificadorapisocio"
             target="_blank"
+            title="Repositório no Github"
           >
             <button type="button" className="button-github">
               <FiGithub color="#535353" size={20} />
@@ -143,6 +169,7 @@ function Header() {
           <a
             href="https://drive.google.com/drive/folders/1BCGZgXB10ecvARXUlo7m0L9L5PDk_qrg?usp=sharing"
             target="_blank"
+            title="Imagens dos clientes"
           >
             <button type="button" className="button-drive">
               <FaGoogleDrive color="#0b6cbb" size={20} />
@@ -152,6 +179,7 @@ function Header() {
             type="button"
             className="button-copy"
             onClick={() => handleCopyUrlLink()}
+            title="Copiar URL"
           >
             <FiCopy color="#bb751a" size={20} />
           </button>

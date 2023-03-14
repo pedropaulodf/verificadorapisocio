@@ -14,14 +14,18 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --page-container-width: 980px;
+  --page-container-width: 1024px;
 }
 
 * {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  font-size: 16px;
+  font-size: 14px;
+}
+
+body {
+  background-color: #ffffff;
 }
 
 button {
@@ -38,7 +42,7 @@ a {
 }
 
 .dangerouslySetInnerHTML{
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   margin: 8px 0;
 }
 .dangerouslySetInnerHTML .content-container{

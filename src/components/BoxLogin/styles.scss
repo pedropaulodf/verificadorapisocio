@@ -10,6 +10,27 @@
     text-align: center;
     padding: 8px;
     border-radius: 7px 7px 0px 0px;
+    position: relative;
+
+    button {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background-color: #00000020;
+      padding: 6px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        background-color: #00000030;
+      }
+
+      &:active {
+        transform: scale(0.8);
+      }
+    }
 
     p {
       font-weight: bold;
@@ -20,6 +41,7 @@
     background-color: #ebebeb;
     text-align: center;
     padding: 8px;
+    word-wrap: break-word;
 
     span {
       font-weight: bold;
@@ -37,32 +59,63 @@
       border-radius: 8px;
       width: 100%;
       box-shadow: 0px 0px 6px 1px #00000030;
+      font-size: 16px;
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
     }
 
-    .card-empresa-dados {
+    .input-box {
+      background-color: #ffffff;
+      border: 2px solid #cacaca;
+      border-radius: 10px;
       display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      border-radius: 6px;
-      padding: 4px;
-      border: 2px solid #c5c5c5;
+      margin-bottom: 12px;
+      position: relative;
 
-      margin: 12px 0;
+      .label-box {
+        background-color: #e6e6e6;
+        width: 100px;
+        padding: 8px 4px;
+        border-radius: 9px 0px 0px 9px;
 
-      div {
-        padding: 3px 10px;
-        border-radius: 4px;
-        margin-right: 10px;
-        background-color: #e2e2e2;
-        height: 100%;
+        p {
+          text-align: center;
+          color: #222222;
+          font-weight: bold;
+          font-size: 14px;
+        }
+      }
+
+      .btn-show-pass {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        background-color: #00000020;
+        width: 20px;
+        height: 20px;
+        padding: 4px;
+        border-radius: 8px;
         display: flex;
         justify-content: center;
         align-items: center;
-        position: relative;
+        cursor: pointer;
 
-        p {
-          font-weight: bold;
+        &:hover {
+          background-color: #00000030;
         }
+      }
+
+      input {
+        background-color: #ffffff;
+        color: #222222;
+        border-radius: 0px 9px 9px 0px;
+        border: none;
+        padding: 6px 12px;
+        width: 100%;
+        box-sizing: border-box;
       }
     }
   }
